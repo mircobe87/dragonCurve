@@ -13,10 +13,12 @@ import java.util.Vector;
  */
 public class PathDescriptor {
     private Vector<Boolean> path;
+    private int iteration;
     
     protected PathDescriptor() {
         path = new Vector<>();
         path.add(Boolean.TRUE);
+        iteration = 0;
     }
     
     protected PathDescriptor(PathDescriptor prev) {
@@ -24,6 +26,7 @@ public class PathDescriptor {
         this.path = new Vector<>(prev.path);
         this.path.add(Boolean.TRUE);
         this.path.addAll(next.path);
+        this.iteration = prev.iteration + 1;
     }
     
     private PathDescriptor not() {
@@ -53,6 +56,10 @@ public class PathDescriptor {
             s += (b) ? "1" : "0";
         }
         return s;
+    }
+    
+    public int getIteration() {
+        return this.iteration;
     }
     
     public boolean[] toBooleanArray() {
