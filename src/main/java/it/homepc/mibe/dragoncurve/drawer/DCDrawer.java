@@ -42,14 +42,18 @@ public class DCDrawer {
         double segmentLength;
         int startDirection;
         
-        if (this.imageWidth/this.imageHeight >= PathUtils.APECT_RATIO) {
+        if (this.imageWidth/(double)this.imageHeight >= PathUtils.APECT_RATIO) {
             startSegmentLength = getStartSegmentFromHeight(this.imageHeight);
+            double curveWidth = PathUtils.APECT_RATIO * startSegmentLength;
+            
+            startX = (this.imageWidth - curveWidth)/2f + PathUtils.LEFT_FACTOR * startSegmentLength;
             startY = PathUtils.TOP_FACTOR * startSegmentLength;
-            startX = (this.imageWidth - PathUtils.APECT_RATIO * startSegmentLength)/2 + PathUtils.LEFT_FACTOR * startSegmentLength;
         } else {
             startSegmentLength = getStartSegmentFromWidth(this.imageWidth);
+            double curveHeight = startSegmentLength;
+            
             startX = PathUtils.LEFT_FACTOR * startSegmentLength;
-            startY = (this.imageHeight - startSegmentLength)/2 + PathUtils.TOP_FACTOR * startSegmentLength;
+            startY = (this.imageHeight - curveHeight)/2f + PathUtils.TOP_FACTOR * startSegmentLength;
         }
         
         startDirection = PathUtils.getInitialRotation(curvePath.getIteration());
